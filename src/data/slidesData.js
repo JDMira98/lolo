@@ -20,9 +20,8 @@ const slides = [
         id: 'slide-2',
         title: 'Inicio - Tunel',
         background: Texturas || `${baseUrl}images/tunnel-2.jpg`,
-        content: (
-          <YouTube360 videoId="qcPkmctTGLA" />
-        )  
+                youtubeId: 'qcPkmctTGLA',
+                content: null
     },
     {
         id: 'slide-3',
@@ -34,9 +33,13 @@ const slides = [
         id: 'slide-4',
         title: 'Desierto',
         background: Desierto || `${baseUrl}images/desert.jpg`,
-        content: (
-          <YouTube360 videoId="tzo_d4cCzKM" />
-        )
+        // Prefer to use a local 360 video (public/videos/desierto360.mp4) rendered with Panorama360 if available.
+        renderMode: 'auto', // 'auto' | 'iframe' | 'panorama'
+        youtubeId: 'E2yPlq1WEjU',
+        // if you place a 360 mp4 at public/videos/desierto360.mp4 it will be used by Panorama360 in 'panorama' mode
+        videoUrl: `${baseUrl}videos/desierto360.mp4`,
+        // content is null so Slide will use renderMode/videoUrl to decide what to render
+        content: null
     },
     {
         id: 'slide-5',

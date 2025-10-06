@@ -1,4 +1,5 @@
 import React from 'react';
+import YouTube360 from './YouTube360';
 
 export default function Slide({ slide, slides = [], onSelectSlide }) {
     // slide: { id, title, background, content } - content can be JSX or string
@@ -53,11 +54,21 @@ export default function Slide({ slide, slides = [], onSelectSlide }) {
             )}
 
             <div className="slide-center">
-                {typeof slide.content === 'string' ? (
-                    <div className="slide-content" dangerouslySetInnerHTML={{ __html: slide.content }} />
-                ) : (
+                {/* If slide.content is provided as JSX, render it (this allows explicit components per-slide).
+                    Otherwise, if slide specifies renderMode or videoUrl, render a YouTube360/Panorama fallback. */}
+                { (slide.content && typeof slide.content !== 'string') ? (
                     <div className="slide-content">{slide.content}</div>
-                )}
+                ) : ( (slide.renderMode || slide.videoUrl) ? (
+                    <div className="slide-content">
+                        <YouTube360 videoId={slide.youtubeId || ''} mode={slide.renderMode || 'auto'} videoUrl={slide.videoUrl} />
+                    </div>
+                ) : (
+                    (typeof slide.content === 'string') ? (
+                        <div className="slide-content" dangerouslySetInnerHTML={{ __html: slide.content }} />
+                    ) : (
+                        <div className="slide-content">{slide.content}</div>
+                    )
+                ))}
             </div>
         </section>
     );
